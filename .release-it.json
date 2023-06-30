@@ -1,0 +1,74 @@
+{
+  "git": {
+    "requireCleanWorkingDir": true,
+    "requireBranch": [ "master", "main" ],
+    "tagName": "${version}",
+    "commitMessage": "chore(release): Release ${version}"
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": true
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "infile": "CHANGELOG.md",
+      "header": "# Changelog",
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "build",
+            "section": "Builds"
+          },
+          {
+            "type": "chore",
+            "section": "Chores"
+          },
+          {
+            "type": "ci",
+            "section": "Continuous Integrations"
+          },
+          {
+            "type": "docs",
+            "section": "Documentation"
+          },
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "perf",
+            "section": "Performance Improvements"
+          },
+          {
+            "type": "refactor",
+            "section": "Code Refactoring"
+          },
+          {
+            "type": "revert",
+            "section": "Reverts"
+          },
+          {
+            "type": "style",
+            "section": "Styles"
+          },
+          {
+            "type": "test",
+            "section": "Tests"
+          },
+          {
+            "type": "ignore",
+            "section": "Ignores",
+            "hidden": true
+          }
+        ]
+      }
+    }
+  }
+}
