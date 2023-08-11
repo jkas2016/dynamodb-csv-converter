@@ -5,22 +5,34 @@ from boto3.dynamodb.conditions import Attr
 
 
 def dynamodb_to_csv():
-    session = boto3.Session(profile_name='<YOUR-PROFILE-NAME>', region_name='<YOUR-REGION-NAME>')
+    session = boto3.Session(profile_name='<YOUR-PROFILE>', region_name='<YOUR-REGION>')
     dynamodb = session.resource('dynamodb')
     table = dynamodb.Table('<YOUR-TABLE-NAME>')
 
-    # Fetch items from the table
-    response = table.scan(
-        # FilterExpression=Key('<YOUR-KEY>').eq(<KEY-VALUE>)
-        FilterExpression=Attr('<YOUR-ATTRIBUTE>').eq('<ATTRIBUTE-VALUE>')
-    )
-    items = response['Items']
+    # Initialize parameters for scan
+    scan_kwargs = {
+        # 'FilterExpression': Key('<YOUR-KEY>').eq(<KEY-VALUE>)
+        'FilterExpression': Attr('<YOUR-ATTR>').eq('<ATTR-VALUE>')
+    }
+    done = False
+    start_key = None
 
-    with open('<FILE-NAME>.csv', 'w', newline='') as file:
+    with open('output.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["row1", "row2"])
-        for item in items:
-            writer.writerow([item.get('key1', ''), item.get('key2', '')])
+        writer.writerow(['key1', 'key2'])
+
+        # Loop through pages of the scan response
+        while not done:
+            if start_key:
+                scan_kwargs['ExclusiveStartKey'] = start_key
+            response = table.scan(**scan_kwargs)
+            items = response.get('Items', [])
+
+            for item in items:
+                writer.writerow([item.get('key1', ''), item.get('key2', '')])
+
+            start_key = response.get('LastEvaluatedKey', None)
+            done = start_key is None
 
 
 dynamodb_to_csv()
