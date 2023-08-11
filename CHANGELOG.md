@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/jkas2016/dynamodb-csv-converter/compare/0.0.1...0.1.0) (2023-08-11)
+
+
+### Features
+
+* Loop through pages of the scan response ([ac014d7](https://github.com/jkas2016/dynamodb-csv-converter/commit/ac014d79eec35bc4f865ba44625bcee1656b0926))
+
 ## 0.0.1 (2023-06-30)
 
 
